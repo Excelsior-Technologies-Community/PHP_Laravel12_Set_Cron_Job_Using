@@ -1,66 +1,97 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+✨//Laravel Installation Code
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+⭐composer create-project laravel/laravel example-app
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+✨//Migration Code
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+⭐php artisan make:migration create_categories_table
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+✨//Controller & Model Code
 
-## Laravel Sponsors
+⭐php artisan make:model Category
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+⭐php artisan make:model Category
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
 
-## Contributing
+✨//Command Creating Code
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+⭐php artisan make:command CategoryCron 
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+✨//Add This Code In CategoryCron
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+{
 
-## License
+    protected $signature = 'category:cron';
+    
+    protected $description = 'Cron job for category table actions';
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    public function handle()
+{
+    // Delete ALL categories
+    
+    Category::truncate();
+
+    \Log::info("Category Cron: All categories deleted at " . now());
+
+    return Command::SUCCESS;
+}
+
+
+
+✨//Add This Code In Console
+
+
+Artisan::command('inspire', function () {
+
+    $this->comment(Inspiring::quote());
+
+})->purpose('Display an inspiring quote');
+
+// ✅ Category Cron Job Schedule
+
+Schedule::command('category:cron')->everyMinute();
+
+
+
+
+✨//Run This Code In Terminal
+
+⭐php artisan schedule:run
+
+
+
+✨// Your windows Task Schedulat Steps
+
+<img width="887" height="573" alt="image" src="https://github.com/user-attachments/assets/40e5a731-a6a1-431f-bb3a-dbf0470c74fc" />
+
+<img width="997" height="644" alt="image" src="https://github.com/user-attachments/assets/2312926a-4fbc-497c-846f-52cfc8bdb388" />
+
+<img width="839" height="647" alt="image" src="https://github.com/user-attachments/assets/c948e147-d09a-4248-bb30-c20b0f3e6c3d" />
+
+<img width="851" height="505" alt="image" src="https://github.com/user-attachments/assets/fdb5fff3-9d58-4d7d-b413-4220f85b03f1" />
+
+<img width="865" height="573" alt="image" src="https://github.com/user-attachments/assets/876dd4f5-9a05-4a10-be3c-43703e05b928" />
+
+<img width="802" height="612" alt="image" src="https://github.com/user-attachments/assets/842a5941-660a-4974-a777-b18a5276bdbb" />
+
+<img width="966" height="571" alt="image" src="https://github.com/user-attachments/assets/c8f19044-80b5-4c99-a534-0428b363078d" />
+
+<img width="975" height="741" alt="image" src="https://github.com/user-attachments/assets/b810cdad-98c0-40d3-9cbb-16c0264599f7" />
+
+<img width="938" height="669" alt="image" src="https://github.com/user-attachments/assets/cb5dbe5f-733d-4647-b621-ba5699737d11" />
+
+
+
+
+
+
+
+
