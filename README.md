@@ -96,7 +96,7 @@ Update `.env`:
 
 ```env
 DB_CONNECTION=mysql
-DB_DATABASE=cron_job
+DB_DATABASE=cron
 DB_USERNAME=root
 DB_PASSWORD=
 ```
