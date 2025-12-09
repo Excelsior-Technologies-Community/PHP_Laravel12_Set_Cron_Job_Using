@@ -1,5 +1,4 @@
-# 🚀 Laravel 12 Category CRUD + Cron Job System  
-### **Made with ❤️ by Hardik Panchal**
+# PHP_Laravel12_Set_Cron_Job_Using
 
 <p align="center">
   <img src="https://img.shields.io/badge/Laravel-12.x-ff2d20?style=for-the-badge&logo=laravel&logoColor=white" />
@@ -10,7 +9,7 @@
 
 ---
 
-# 📌 Overview
+#  Overview
 
 A fully-featured **Category CRUD + Cron Job** system built using **Laravel 12**, including:
 
@@ -24,20 +23,20 @@ A fully-featured **Category CRUD + Cron Job** system built using **Laravel 12**,
 
 ---
 
-# ⭐ Features
+#  Features
 
-- 📝 Full CRUD (Create, Read, Update, Delete)  
-- ⏱ Cron Job (runs every minute)  
-- 🛠 Custom Artisan Command  
-- 📦 Clean MVC Structure  
-- 🎨 Bootstrap Blade Templates  
-- 🔧 Full Laravel Scheduler Setup  
-- 🧹 Log Writing via Cron  
-- 🗂 Pagination  
+-  Full CRUD (Create, Read, Update, Delete)  
+-  Cron Job (runs every minute)  
+-  Custom Artisan Command  
+-  Clean MVC Structure  
+-  Bootstrap Blade Templates  
+-  Full Laravel Scheduler Setup  
+-  Log Writing via Cron  
+-  Pagination  
 
 ---
 
-# 📁 Folder Structure
+#  Folder Structure
 
 ```
 app/
@@ -63,7 +62,7 @@ database/
 
 ---
 
-# 📚 Table of Contents
+#  Table of Contents
 
 - [Overview](#-overview)  
 - [Features](#-features)  
@@ -82,7 +81,7 @@ database/
 
 ---
 
-# ⚙ Installation
+#  Installation
 
 ```bash
 composer create-project laravel/laravel CronJobApp "12.*"
@@ -90,7 +89,7 @@ composer create-project laravel/laravel CronJobApp "12.*"
 
 ---
 
-# 🔧 Environment Setup
+#  Environment Setup
 
 Update `.env`:
 
@@ -106,7 +105,7 @@ DB_PASSWORD=
 
 ---
 
-# 🗄 Migration
+#  Migration
 
 Create migration:
 
@@ -122,7 +121,7 @@ php artisan migrate
 
 ---
 
-# 🔌 Routes
+#  Routes
 
 ```php
 use App\Http\Controllers\CategoryController;
@@ -132,7 +131,7 @@ Route::resource('categories', CategoryController::class);
 
 ---
 
-# 🎮 Controller (Important Methods)
+#  Controller (Important Methods)
 
 ### Display Categories
 
@@ -155,7 +154,7 @@ public function store(Request $request) {
 
 ---
 
-# 🧬 Model
+#  Model
 
 ```php
 class Category extends Model
@@ -166,21 +165,21 @@ class Category extends Model
 
 ---
 
-# 🖼 Blade Views
+#  Blade Views
 
-### 📌 index.blade.php  
+###  index.blade.php  
 - Shows list  
 - Edit/Delete buttons  
 - Pagination  
 
-### 📌 create.blade.php  
+###  create.blade.php  
 - Add new category form  
 
 ---
 
-# ⏱ Cron Job Setup
+#  Cron Job Setup
 
-## 1️⃣ Create Artisan Command
+## 1️ Create Artisan Command
 
 `app/Console/Commands/CategoryCron.php`
 
@@ -195,7 +194,7 @@ public function handle()
 
 ---
 
-## 2️⃣ Register Inside Kernel
+## 2️ Register Inside Kernel
 
 `app/Console/Kernel.php`
 
@@ -208,7 +207,7 @@ protected function schedule(Schedule $schedule)
 
 ---
 
-## 3️⃣ Linux Crontab Setup
+## 3️ Linux Crontab Setup
 
 Run:
 
@@ -224,7 +223,7 @@ Add:
 
 ---
 
-## 4️⃣ Windows Scheduler Setup
+## 4️ Windows Scheduler Setup
 
 - Open **Task Scheduler**  
 - Create Task  
@@ -234,7 +233,7 @@ Add:
 
 ---
 
-# ▶ Run Application
+#  Run Application
 
 ```bash
 php artisan serve
@@ -248,7 +247,7 @@ http://localhost:8000/categories
 
 ---
 
-# 📸 Windows Task Scheduler Screenshots
+#  Windows Task Scheduler Screenshots
 
 <img width="887" height="573" alt="image" src="https://github.com/user-attachments/assets/a7b1d124-01a4-41da-aefb-c45a308f6a3e" />
 
