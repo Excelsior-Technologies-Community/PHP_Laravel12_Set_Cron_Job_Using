@@ -1,66 +1,287 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# PHP_Laravel12_Set_Cron_Job_Using
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://img.shields.io/badge/Laravel-12.x-ff2d20?style=for-the-badge&logo=laravel&logoColor=white" />
+  <img src="https://img.shields.io/badge/PHP-8.2-blue?style=for-the-badge&logo=php" />
+  <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Build-Passing-brightgreen?style=for-the-badge" />
 </p>
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+#  Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+A fully-featured **Category CRUD + Cron Job** system built using **Laravel 12**, including:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Category creation, editing, listing, deletion  
+- Cron job executed every minute  
+- Custom Artisan Command  
+- Laravel Scheduler  
+- Blade Views (Bootstrap UI)  
+- Professional folder structure  
+- Fully documented setup guide  
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+#  Features
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-  Full CRUD (Create, Read, Update, Delete)  
+-  Cron Job (runs every minute)  
+-  Custom Artisan Command  
+-  Clean MVC Structure  
+-  Bootstrap Blade Templates  
+-  Full Laravel Scheduler Setup  
+-  Log Writing via Cron  
+-  Pagination  
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+#  Folder Structure
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```
+app/
+├── Console/Commands/
+│   └── CategoryCron.php
+├── Http/Controllers/
+│   ├── Controller.php
+│   └── CategoryController.php
+├── Models/
+│   └── Category.php
 
-### Premium Partners
+resources/
+└── views/categories/
+       ├── index.blade.php
+       ├── create.blade.php
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+routes/
+└── web.php
 
-## Contributing
+database/
+└── migrations/
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+#  Table of Contents
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- [Overview](#-overview)  
+- [Features](#-features)  
+- [Folder Structure](#-folder-structure)  
+- [Installation](#-installation)  
+- [Environment Setup](#-environment-setup)  
+- [Migration](#-migration)  
+- [Routes](#-routes)  
+- [Controller](#-controller)  
+- [Model](#-model)  
+- [Blade Views](#-blade-views)  
+- [Cron Job Setup](#-cron-job-setup)  
+- [Run Application](#-run-application)  
+- [Screenshots](#-screenshots)  
+- [Credits](#-credits)
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#  Installation
 
-## License
+```bash
+composer create-project laravel/laravel CronJobApp "12.*"
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+#  Environment Setup
+
+Update `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=cron
+DB_USERNAME=root
+DB_PASSWORD=
+
+```
+
+---
+
+#  Migration
+
+Create migration:
+
+```bash
+php artisan make:migration create_categories_table --create=categories
+```
+
+Run migration:
+
+```bash
+php artisan migrate
+```
+
+---
+
+#  Routes
+
+```php
+use App\Http\Controllers\CategoryController;
+
+Route::resource('categories', CategoryController::class);
+```
+
+---
+
+#  Controller (Important Methods)
+
+### Display Categories
+
+```php
+public function index() {
+    $categories = Category::latest()->paginate(10);
+    return view('categories.index', compact('categories'));
+}
+```
+
+### Store Category
+
+```php
+public function store(Request $request) {
+    $request->validate(['name' => 'required']);
+    Category::create($request->all());
+    return redirect()->route('categories.index');
+}
+```
+
+---
+
+#  Model
+
+```php
+class Category extends Model
+{
+    protected $fillable = ['name'];
+}
+```
+
+---
+
+#  Blade Views
+
+###  index.blade.php  
+- Shows list  
+- Edit/Delete buttons  
+- Pagination  
+
+###  create.blade.php  
+- Add new category form  
+
+---
+
+#  Cron Job Setup
+
+## 1️ Create Artisan Command
+
+`app/Console/Commands/CategoryCron.php`
+
+```php
+protected $signature = 'category:cron';
+
+public function handle()
+{
+    \Log::info("Category Cron Executed at " . now());
+}
+```
+
+---
+
+## 2️ Register Inside Kernel
+
+`app/Console/Kernel.php`
+
+```php
+protected function schedule(Schedule $schedule)
+{
+    $schedule->command('category:cron')->everyMinute();
+}
+```
+
+---
+
+## 3️ Linux Crontab Setup
+
+Run:
+
+```bash
+crontab -e
+```
+
+Add:
+
+```
+* * * * * php /var/www/html/artisan schedule:run >> /dev/null 2>&1
+```
+
+---
+
+## 4️ Windows Scheduler Setup
+
+- Open **Task Scheduler**  
+- Create Task  
+- Program: `php.exe`  
+- Arguments: `artisan schedule:run`  
+- Trigger: Every 1 minute  
+
+---
+
+#  Run Application
+
+```bash
+php artisan serve
+```
+
+Visit:
+
+```
+http://localhost:8000/categories
+```
+
+---
+
+#  Windows Task Scheduler Screenshots
+
+<img width="887" height="573" alt="image" src="https://github.com/user-attachments/assets/a7b1d124-01a4-41da-aefb-c45a308f6a3e" />
+
+
+<img width="997" height="644" alt="image" src="https://github.com/user-attachments/assets/11276ba5-8e5a-490e-9b1b-02c46c041a42" />
+
+
+<img width="839" height="647" alt="image" src="https://github.com/user-attachments/assets/8a40d775-0d3b-4f4b-9568-45d6f2bcbd09" />
+
+
+<img width="851" height="505" alt="image" src="https://github.com/user-attachments/assets/883c1a23-0966-4859-8f48-333c6f7c17d0" />
+
+
+<img width="865" height="573" alt="image" src="https://github.com/user-attachments/assets/f1a33b48-7fe8-444e-8625-7c258e7eada7" />
+
+
+<img width="802" height="612" alt="image" src="https://github.com/user-attachments/assets/36175894-96e6-406f-8a59-09186b8a27f9" />
+
+
+<img width="966" height="571" alt="image" src="https://github.com/user-attachments/assets/3a592d11-afcc-4d36-bb67-cf4ff3473bbd" />
+
+
+<img width="975" height="741" alt="image" src="https://github.com/user-attachments/assets/9a95baec-eb1f-405c-b942-aa6f238b2f92" />
+
+
+<img width="938" height="669" alt="image" src="https://github.com/user-attachments/assets/9d32b9f8-9300-4167-a482-8fbc95235d52" />
+
+
+
+
+
+
+
+
+
+
+
