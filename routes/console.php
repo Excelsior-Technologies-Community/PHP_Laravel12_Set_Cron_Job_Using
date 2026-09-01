@@ -12,4 +12,11 @@ Artisan::command('inspire', function () {
 // ===============================
 // ✅ Category Cron Job Schedule
 // ===============================
-Schedule::command('category:cron')->everyMinute();
+if (config('cron.enabled', false)) {
+    $interval = config('cron.interval', 'everyMinute');
+
+    Schedule::command('category:cron')
+        ->{$interval}()
+        ->withoutOverlapping()
+        ->appendOutputTo(storage_path('logs/category-cron.log'));
+}
