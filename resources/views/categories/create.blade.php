@@ -1,35 +1,111 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add Category</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-</head>
-<body class="p-4">
+@extends('layouts.app')
 
-    <h2>Add Category</h2>
+@section('content')
 
-    <a href="{{ route('categories.index') }}" class="btn btn-secondary mb-3">Back</a>
+<div class="container mt-4">
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    {{-- Page Header --}}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Create Category</h2>
+            <p class="text-muted mb-0">Add a new category</p>
         </div>
+
+        <a href="{{ route('categories.index') }}" class="btn btn-secondary">
+            ← Back
+        </a>
+    </div>
+
+    {{-- Validation Errors --}}
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <strong>Please fix the following errors:</strong>
+
+        <ul class="mb-0 mt-2">
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
 
-    <form action="{{ route('categories.store') }}" method="POST">
-        @csrf
+    {{-- Create Form --}}
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
 
-        <div class="mb-3">
-            <label class="form-label">Category Name</label>
-            <input type="text" name="name" class="form-control" placeholder="Enter category name">
+            <form method="POST" action="{{ route('categories.store') }}">
+                @csrf
+
+                {{-- Category Name --}}
+                <div class="mb-4">
+                    <label for="name" class="form-label fw-semibold">
+                        Category Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        class="form-control @error('name') is-invalid @enderror"
+                        value="{{ old('name') }}"
+                        placeholder="Enter category name"
+                        required>
+
+                    @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+
+                {{-- Status --}}
+                <div class="mb-4">
+                    <label for="status" class="form-label fw-semibold">
+                        Status
+                    </label>
+
+                    <select
+                        name="status"
+                        id="status"
+                        class="form-select @error('status') is-invalid @enderror"
+                        required>
+                        <option value="active"
+                            {{ old('status', 'active') === 'active' ? 'selected' : '' }}>
+                            Active
+                        </option>
+
+                        <option value="inactive"
+                            {{ old('status') === 'inactive' ? 'selected' : '' }}>
+                            Inactive
+                        </option>
+                    </select>
+
+                    @error('status')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+
+                {{-- Buttons --}}
+                <div class="d-flex gap-2">
+
+                    <button type="submit" class="btn btn-primary">
+                        Create Category
+                    </button>
+
+                    <a href="{{ route('categories.index') }}"
+                        class="btn btn-outline-secondary">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
         </div>
+    </div>
 
-        <button type="submit" class="btn btn-success">Save</button>
-    </form>
+</div>
 
-</body>
-</html>
+@endsection

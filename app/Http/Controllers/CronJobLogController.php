@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CronJobLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class CronJobLogController extends Controller
 {
@@ -15,8 +16,11 @@ class CronJobLogController extends Controller
         $query = CronJobLog::query();
 
         /*
-         * Search by job name.
-         */
+        |--------------------------------------------------------------------------
+        | Search
+        |--------------------------------------------------------------------------
+        */
+
         if ($request->filled('search')) {
             $query->where(
                 'job_name',
@@ -26,8 +30,11 @@ class CronJobLogController extends Controller
         }
 
         /*
-         * Filter by status.
-         */
+        |--------------------------------------------------------------------------
+        | Status filter
+        |--------------------------------------------------------------------------
+        */
+
         if ($request->filled('status')) {
             $query->where(
                 'status',
@@ -36,8 +43,11 @@ class CronJobLogController extends Controller
         }
 
         /*
-         * Filter by date.
-         */
+        |--------------------------------------------------------------------------
+        | Date filter
+        |--------------------------------------------------------------------------
+        */
+
         if ($request->filled('from_date')) {
             $query->whereDate(
                 'started_at',
@@ -55,8 +65,11 @@ class CronJobLogController extends Controller
         }
 
         /*
-         * Statistics.
-         */
+        |--------------------------------------------------------------------------
+        | Statistics
+        |--------------------------------------------------------------------------
+        */
+
         $totalRuns = (clone $query)->count();
 
         $successfulRuns = (clone $query)
@@ -71,34 +84,52 @@ class CronJobLogController extends Controller
             ->sum('records_deleted');
 
         /*
-         * Latest executions.
-         */
+        |--------------------------------------------------------------------------
+        | Latest executions
+        |--------------------------------------------------------------------------
+        */
+
         $logs = $query
-            ->latest('started_at')
-            ->paginate(10)
+            ->oldest('started_at')
+            ->paginate(5)
             ->appends($request->all());
 
         /*
-         * Recent failures for alert.
-         */
-        $recentFailures = CronJobLog::where('status', 'failed')
-            ->latest('started_at')
+        |--------------------------------------------------------------------------
+        | Recent failures
+        |--------------------------------------------------------------------------
+        */
+
+        $recentFailures = CronJobLog::where(
+            'status',
+            'failed'
+        )
+            ->oldest('started_at')
             ->limit(5)
             ->get();
 
         /*
-         * Last execution.
-         */
-        $lastExecution = CronJobLog::latest('started_at')->first();
+        |--------------------------------------------------------------------------
+        | Last execution
+        |--------------------------------------------------------------------------
+        */
+
+        $lastExecution = CronJobLog::oldest(
+            'started_at'
+        )->first();
 
         /*
-         * Last successful execution.
-         */
-        $lastSuccessfulExecution = CronJobLog::where(
-            'status',
-            'success'
-        )
-            ->latest('started_at')
+        |--------------------------------------------------------------------------
+        | Last successful execution
+        |--------------------------------------------------------------------------
+        */
+
+        $lastSuccessfulExecution =
+            CronJobLog::where(
+                'status',
+                'success'
+            )
+            ->oldest('started_at')
             ->first();
 
         return view(
@@ -125,5 +156,44 @@ class CronJobLogController extends Controller
             'cron-history.show',
             compact('cronJobLog')
         );
+    }
+
+    /**
+     * Run category cron manually.
+     */
+    public function runNow()
+    {
+        $exitCode = Artisan::call(
+            'category:cron',
+            [
+                '--days' => 30,
+            ]
+        );
+
+        $output = Artisan::output();
+
+        if ($exitCode === 0) {
+            return redirect()
+                ->route('cron-history.index')
+                ->with(
+                    'success',
+                    'Category Cron executed successfully.'
+                )
+                ->with(
+                    'cron_output',
+                    $output
+                );
+        }
+
+        return redirect()
+            ->route('cron-history.index')
+            ->with(
+                'error',
+                'Category Cron execution failed.'
+            )
+            ->with(
+                'cron_output',
+                $output
+            );
     }
 }
