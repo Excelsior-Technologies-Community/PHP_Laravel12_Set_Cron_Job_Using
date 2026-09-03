@@ -47,7 +47,12 @@ class CategoryCron extends Command
                 'created_at',
                 '<',
                 $cutoffDate
-            )->get();
+            )
+                ->where(
+                    'status',
+                    'inactive'
+                )
+                ->get();
 
             $recordsFound = $categoriesToDelete->count();
 
@@ -84,7 +89,7 @@ class CategoryCron extends Command
                 foreach ($categoriesToDelete as $category) {
                     $this->line(
                         "Would delete: [ID: {$category->id}] {$category->name} " .
-                        "(created: {$category->created_at})"
+                            "(created: {$category->created_at})"
                     );
                 }
 
@@ -94,7 +99,7 @@ class CategoryCron extends Command
 
                 Log::info(
                     "Category Cron: Dry-run completed. " .
-                    "{$recordsFound} records would be deleted."
+                        "{$recordsFound} records would be deleted."
                 );
 
                 $this->completeCronLog(
@@ -134,7 +139,7 @@ class CategoryCron extends Command
 
             Log::info(
                 "Category Cron: Deleted {$deletedCount} categories " .
-                "older than {$days} days at " . now()
+                    "older than {$days} days at " . now()
             );
 
             $this->info(
@@ -142,7 +147,6 @@ class CategoryCron extends Command
             );
 
             return Command::SUCCESS;
-
         } catch (Throwable $exception) {
 
             $durationMs = (int) round(
@@ -166,7 +170,7 @@ class CategoryCron extends Command
 
             $this->error(
                 'Category Cron failed: ' .
-                $exception->getMessage()
+                    $exception->getMessage()
             );
 
             return Command::FAILURE;
